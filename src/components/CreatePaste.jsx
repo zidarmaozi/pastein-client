@@ -1,81 +1,73 @@
-import React from 'react';
-import { Globe, Clock, Lock, MoreHorizontal } from 'lucide-react';
 
-const CreatePaste = () => {
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import NavBar from './NavBar';
+import Footer from './Footer';
+
+export default function CreatePaste() {
+  const [content, setContent] = useState('');
+  const [title, setTitle] = useState('');
+  const [syntax, setSyntax] = useState('text');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    // Placeholder for API call
+    // await axios.post(...)
+    // navigate(`/${code}`);
+    setTimeout(() => {
+        setLoading(false);
+        alert("Create Paste logic needs to be connected to API");
+    }, 1000);
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-6">
-      <div className="container mx-auto">
-         <div className="text-center mb-10">
-            <h2 className="text-4xl font-bold text-slate-900 mb-2">Create a new Paste</h2>
-            <p className="text-slate-500">Create and publish any code and text instantly.</p>
-         </div>
-         
-         <div className="bg-white rounded-3xl shadow-xl p-8 max-w-5xl mx-auto border border-slate-100">
-            <div className="flex flex-col lg:flex-row gap-8">
-               {/* Left: Content */}
-               <div className="flex-1 space-y-6">
-                  <div className="space-y-2">
-                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Title (Optional)</label>
-                     <input type="text" placeholder="My Awesome Snippet" className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-slate-700" />
-                  </div>
-                  
-                  <div className="space-y-2">
-                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Content</label>
-                     <div className="relative">
-                        <textarea 
-                           className="w-full h-80 bg-slate-50 border border-slate-200 rounded-lg px-4 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all font-mono text-sm resize-none"
-                           placeholder="Paste your code or text here..."
-                        ></textarea>
-                        <div className="absolute bottom-4 right-4 text-slate-400 cursor-se-resize">
-                           <MoreHorizontal size={20} />
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               
-               {/* Right: Settings */}
-               <div className="lg:w-80 space-y-6">
-                  <div className="bg-slate-50 p-5 rounded-xl border border-slate-100">
-                     <div className="flex items-center gap-2 mb-4 text-slate-700 font-bold">
-                        <Globe size={18} /> Visibility
-                     </div>
-                     <div className="flex bg-white rounded-lg p-1 border border-slate-200">
-                        <button className="flex-1 py-1.5 text-sm font-medium rounded-md bg-blue-600 text-white shadow-sm">Public</button>
-                        <button className="flex-1 py-1.5 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-50">Private</button>
-                     </div>
-                  </div>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col">
+      <NavBar />
+      <main className="flex-1 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6 sm:p-8">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Create New Paste</h1>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Title (Optional)</label>
+                    <input 
+                        type="text" 
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                        placeholder="My Awesome Paste"
+                    />
+                </div>
 
-                  <div className="bg-slate-50 p-5 rounded-xl border border-slate-100">
-                     <div className="flex items-center gap-2 mb-4 text-slate-700 font-bold">
-                        <Clock size={18} /> Expiry
-                     </div>
-                     <div className="flex bg-white rounded-lg p-1 border border-slate-200">
-                        <button className="flex-1 py-1.5 text-sm font-medium rounded-md bg-slate-800 text-white shadow-sm">Never</button>
-                        <button className="flex-1 py-1.5 text-sm font-medium rounded-md text-slate-500 hover:bg-slate-50">Expired</button>
-                     </div>
-                  </div>
-
-                  <div className="bg-slate-50 p-5 rounded-xl border border-slate-100">
-                     <div className="flex items-center gap-2 mb-4 text-slate-700 font-bold">
-                        <Lock size={18} /> Action Gate
-                     </div>
-                     <div className="flex items-center justify-between">
-                        <span className="text-sm text-slate-500 font-medium">Require Social Action</span>
-                        <div className="w-10 h-6 bg-slate-200 rounded-full relative cursor-pointer">
-                           <div className="w-4 h-4 bg-white rounded-full absolute top-1 left-1 shadow-sm"></div>
-                        </div>
-                     </div>
-                  </div>
-                  
-                  <button className="w-full py-4 bg-slate-900 text-white font-bold rounded-lg shadow-lg hover:bg-slate-800 transition-all transform hover:-translate-y-0.5">
-                     PUBLISH PASTE
-                  </button>
-               </div>
-            </div>
-         </div>
-      </div>
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Content</label>
+                    <textarea 
+                        value={content}
+                        onChange={(e) => setContent(e.target.value)}
+                        className="w-full h-64 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white font-mono text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all resize-y"
+                        placeholder="Paste your content here..."
+                        required
+                    />
+                </div>
+                
+                <div className="flex justify-end">
+                    <button 
+                        type="submit" 
+                        disabled={loading}
+                        className="px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center gap-2"
+                    >
+                        {loading ? 'Creating...' : 'Create Paste'}
+                        {!loading && <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>}
+                    </button>
+                </div>
+            </form>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
-};
-
-export default CreatePaste;
+}

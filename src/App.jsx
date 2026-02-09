@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import ViewPaste from './components/ViewPaste';
+import RedirectHandler from './components/RedirectHandler';
+import VerifyPage from './components/VerifyPage';
+import ContentPage from './components/ContentPage';
 import { motion } from 'framer-motion';
 
 import LandingPage from './components/LandingPage';
@@ -12,7 +14,9 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/create" element={<CreatePaste />} />
-        <Route path="/:code" element={<ViewPaste />} />
+        <Route path="/verify" element={<VerifyPage />} />
+        <Route path="/content" element={<ContentPage />} />
+        <Route path="/:code" element={<RedirectHandler />} />
       </Routes>
     </Router>
   );
